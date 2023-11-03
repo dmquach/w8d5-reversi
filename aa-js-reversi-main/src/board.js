@@ -10,6 +10,18 @@ if (typeof window === 'undefined'){
  * and two white pieces at [3, 3] and [4, 4].
  */
 function _makeGrid() {
+  const outerArr = []
+  for (let i = 0; i < 8; i++) {
+    outerArr.push(new Array(8))
+  }
+
+  outerArr[3][3] = new Piece("white")
+  outerArr[4][4] = new Piece("white")
+  outerArr[3][4] = new Piece("black")
+  outerArr[4][3] = new Piece("black")
+
+
+  return outerArr
 }
 
 /**
@@ -29,6 +41,9 @@ Board.DIRS = [
  * Checks if a given position is on the Board.
  */
 Board.prototype.isValidPos = function (pos) {
+  [x, y] = pos
+  if (x >= 0 && x <= 7 && y >= 0 && y <= 7) return true
+  return false
 };
 
 /**
@@ -36,6 +51,12 @@ Board.prototype.isValidPos = function (pos) {
  * throwing an Error if the position is invalid.
  */
 Board.prototype.getPiece = function (pos) {
+  [x, y] = pos
+  if (this.isValidPos(pos)) {
+    return this.grid[x][y]
+  } else {
+    throw new Error('Not valid pos!')
+  }
 };
 
 /**
@@ -43,12 +64,20 @@ Board.prototype.getPiece = function (pos) {
  * matches a given color.
  */
 Board.prototype.isMine = function (pos, color) {
+  if (this.isOccupied(pos)) {
+    const piece = this.getPiece(pos)
+    return piece.color === color
+  } else {
+    return false
+  }
 };
 
 /**
  * Checks if a given position has a piece on it.
  */
 Board.prototype.isOccupied = function (pos) {
+  const piece = this.getPiece(pos)
+  return typeof(piece) === "object"
 };
 
 /**
@@ -57,14 +86,22 @@ Board.prototype.isOccupied = function (pos) {
  * It then returns an array of all pieces between the starting position and
  * ending position.
  *
- * Returns an empty array if it reaches the end of the board before finding 
+ * Returns an empty array if it reaches the end of the board before finding
  * another piece of the same color.
  *
  * Returns empty array if it hits an empty position.
  *
  * Returns empty array if no pieces of the opposite color are found.
  */
+[-1, -1], "white", [1, 0]
+
 Board.prototype._positionsToFlip = function (pos, color, dir, piecesToFlip) {
+  if(this.isValidPos(pos)){
+    
+  } else {
+    return []
+  }
+  return piecesToFlip
 }
 
 /**
